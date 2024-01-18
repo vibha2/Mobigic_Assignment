@@ -2,8 +2,8 @@ import "./App.css";
 import HomePage from "./components/auths/home-page/homePage";
 import Register from "./components/auths/register-user/register-user";
 import Login from "./components/auths/login/login";
-import EmailVerification from "./components/auths/email-verification/emailVerification";
 import NavbarComponent from "./components/commons/navabar/navbar";
+import Profile from "./components/auths/profile/profile";
 import { Route, Routes } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -35,9 +35,9 @@ function App() {
       <NavbarComponent props={user} />
       <Routes>
         <Route path="/home/:userId" element={<HomePage />} />
+        <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/sign-up" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/email-verify/:userId" element={<EmailVerification />} />
       </Routes>
     </div>
   );

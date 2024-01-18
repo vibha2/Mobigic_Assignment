@@ -45,3 +45,7 @@
     font-size: 18px;
     box-shadow: 0 0px 8px rgba(119, 117, 117, 0.744);
 }
+.profileLink{
+    color:black;
+    text-decoration: none;
+}

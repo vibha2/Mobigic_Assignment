@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "./navbar.css";
 import React, { useEffect, useState } from "react";
 import AuthService from "../../../services/authService";
+import { useLocation } from 'react-router-dom'
 function NavbarComponent(props) {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState();
@@ -18,6 +19,9 @@ function NavbarComponent(props) {
     setMenuOpen(false);
   };
 
+  const [userid, setUserid] = useState('');
+  const location = useLocation();
+
   const handleLogout = () => {
     // Implement your logout logic here
     setMenuOpen(false);
@@ -26,6 +30,9 @@ function NavbarComponent(props) {
   };
   useEffect(() => {
     console.log("props =>", props.props);
+    const token = location.pathname.split('/').at(-1);
+    setUserid(token);
+
     if (props.props !== "null") {
       AuthService.getUserById(props.props).then(
         (res) => {
@@ -47,8 +54,8 @@ function NavbarComponent(props) {
     <div className="navbar-container">
       <Navbar collapseOnSelect expand="md">
         <Container>
-          <a href="/" className="logo-name">
-            CRYPTOS
+          <a href={`/home/${userid}`} className="logo-name">
+            FILEUPLOADER
           </a>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
@@ -78,6 +85,7 @@ function NavbarComponent(props) {
                 {/* Conditional rendering for the menu */}
                 {isMenuOpen && (
                   <div className="logout-menu">
+                     <Link className="profileLink" to={`/profile/${userid}`}>Profile</Link>
                     <button onClick={handleLogout}>Logout</button>
                   </div>
                 )}

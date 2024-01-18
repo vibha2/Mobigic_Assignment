@@ -29,7 +29,8 @@ const Register = () => {
     AuthService.signUp(formData).then((res) => {
       console.log("user created =>", res);
       setLoading(false);
-      navigate(`/email-verify/${res.data.user._id}`);
+      navigate(`/home/${res.data.user._id}`);
+     
     },(err) =>{
       console.log("Err =>", err);
       setError(err.response.data.message);
