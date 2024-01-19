@@ -27,20 +27,27 @@ const HomePage = () => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const handleFileUpload = () => {
+  const handleFileUpload = (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append('file', selectedFile);
     if(!selectedFile)
     {
-      toast.error("Please Upload the file");
+       toast.error("Please select the file");
+       return;
     }
     // Make an API request to your Node.js server to handle file upload
     FileService.fileUpload(formData, userId)
       .then(data =>{ 
+        setSelectedFile(null);
+        toast.success("File uploaded successfully");
         //console.log("file uploaded =>",data)
       }
       )
-      .catch(error => console.error(error));
+      .catch(error =>{
+        toast.success("File uploading failed");
+        console.error(error)
+      });
   };
 
   

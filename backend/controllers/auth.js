@@ -132,7 +132,7 @@ exports.signUp = async (req, res) => {
 
     //Create the user
     let approved = "";
-    approved === "Intructor" ? (approved = false) : (approved = true);
+    approved === "Instructor" ? (approved = false) : (approved = true);
 
     //Create the Additional Profile for User
     // const profileDetails = await Profile.create({

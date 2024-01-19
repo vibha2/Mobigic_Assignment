@@ -6,21 +6,26 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import "./profile.css"
 
-function Profile(){
-  
+function Profile() {
+
   const { userId } = useParams();
   const [fileData, setFileData] = useState([]);
   const [show, setShow] = useState(false);
-  const [passcode, setPasscode] = useState(-1);
+  const [passcode, setPasscode] = useState(0);
   const [fileId, setFileId] = useState(0);
   const [fileName, setFileName] = useState('');
+  const [isError, setError] = useState(false);
   const navigate = useNavigate();
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setError(false);
+    setShow(false);
+  }
   const handleShow = () => setShow(true);
 
- 
+
   useEffect(() => {
     //console.log("userId profile=> ",userId);
     FileService.getFile(userId).then(
@@ -30,15 +35,21 @@ function Profile(){
         //console.log("type of file url=> ", data[0].data);
         //console.log("file url=> ", data);
         setFileData(data);
-        
+
       },
       (err) => {
         //console.log("err =>", err);
       }
     );
-  },[userId]);
+  }, [userId]);
 
-  function handleSubmitPasscode(){
+  function handleSubmitPasscode() {
+    console.log("passscode =>", passcode)
+    if (!passcode) {
+      toast.error("Please enter passcode");
+      setError(false);
+      return;
+    }
     FileService.downloadFile(passcode).then(
       (res) => {
         //console.log("response=> ",res);
@@ -50,17 +61,19 @@ function Profile(){
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-         
-          
+          toast.success("Downloaded Successfully");
+          handleClose();
+
         }
       },
       (err) => {
-        //console.log("err =>", err);
+        console.log("err =>", err);
+        setError(true);
+        toast.error("Download Failed");
       }
     )
 
-    handleClose();
-    toast.success("Downloaded Successfully");
+
   }
 
   const handleDownload = (fileId, fileName) => {
@@ -70,11 +83,11 @@ function Profile(){
 
   };
 
-  const handleDelete = (fileId) =>{
+  const handleDelete = (fileId) => {
     FileService.deleteFile(fileId, userId).then(
       (res) => {
         //console.log("response=> ",res);
-        const filterFiledata = fileData.filter(x => x._id != fileId);
+        const filterFiledata = fileData.filter(x => x._id !== fileId);
 
         setFileData(filterFiledata);
         toast.success("Deleted successfully");
@@ -84,54 +97,55 @@ function Profile(){
       }
     )
   }
-  
+
   const handleBack = () => {
     navigate(-1);
   }
 
   return (
     <div className='profileWrapper'>
-        <h4>List of files</h4>
-        <div>
+      <h4>List of files</h4>
+      <div>
         <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Filename</th>
-      <th scope="col">Passcode</th>
-      <th scope="col">Download</th>
-      <th scope="col">Delete</th>
-    </tr>
-  </thead>
-        <tbody>
-        {
-          fileData.map((data, index)=> (
-            <tr key={index}>
-              <th scope="row">{index + 1}</th>
-              <td>{data.name}</td>
-              <td>{data.passcode}</td>
-              <td><button onClick={()=> handleDownload(data._id, data.name)}>Download</button></td>
-              <td><button onClick={()=> handleDelete(data._id)}>Delete</button></td>
-          </tr>
-          ))
-        }
-         
-         
-        </tbody>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Filename</th>
+              <th scope="col">Passcode</th>
+              <th scope="col">Download</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              fileData.map((data, index) => (
+                <tr key={index}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{data.name}</td>
+                  <td>{data.passcode}</td>
+                  <td><button className='download-btn' onClick={() => handleDownload(data._id, data.name)}>Download</button></td>
+                  <td><button className='delete-btn' onClick={() => handleDelete(data._id)}>Delete</button></td>
+                </tr>
+              ))
+            }
+
+
+          </tbody>
         </table>
-        </div>
+      </div>
 
-        <div>
-           <button onClick={handleBack}>Back</button>
-        </div>
+      <div>
+        <button onClick={handleBack}>Back</button>
+      </div>
 
-        <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Passcode Verification</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <label>Enter passcode to download the file</label>
-          <input type="number" required onChange={(event)=> setPasscode(event.target.value)} />
+          <input type="number" required onChange={(event) => setPasscode(event.target.value)} />
+          {isError ? <div style={{ backgroundColor: 'red' }}>Invalid Passcode</div> : <></>}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

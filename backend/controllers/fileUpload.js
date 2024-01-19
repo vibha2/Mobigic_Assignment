@@ -52,7 +52,8 @@ const downloadFile = async(req,res) => {
       const fileData = file?.data;
       if(!file)
       {
-        res.status(500).json({
+        return res.status(400).json({
+          success : false,
           message: "Invalid Passcode"
         })
       }
@@ -65,7 +66,7 @@ const downloadFile = async(req,res) => {
   catch(error)
   {
     console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
 }
 

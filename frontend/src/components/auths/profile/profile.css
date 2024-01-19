@@ -3,8 +3,26 @@
     margin: 2rem auto;
     width:40%;
     color:white;
+    border-radius: 10px;
 }
 h4
 {
     text-align: center;
+}
+
+.download-btn {
+    border-radius:  10px;
+    background-color: rgb(26, 120, 228);
+    color: white;
+}
+
+.delete-btn{
+    border-radius:  10px;
+    background-color: rgb(190, 37, 37);
+    color: white;
+}
+
+.download-btn .delete-btn:hover {
+    transform: scale(2);
+    cursor: pointer;
 }

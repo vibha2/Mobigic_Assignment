@@ -34,7 +34,7 @@ function App() {
     <div className="body">
       <NavbarComponent props={user} />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        {/* <Route path="/home" element={<HomePage />} /> */}
         <Route path="/home/:userId" element={<HomePage />} />
         <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/sign-up" element={<Register />} />

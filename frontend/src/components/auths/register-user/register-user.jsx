@@ -29,7 +29,9 @@ const Register = () => {
     AuthService.signUp(formData).then((res) => {
       //console.log("user created =>", res);
       setLoading(false);
-      navigate(`/home/${res.data.user._id}`);
+      console.log("check=> ",`/home/${res.data.user._id}`)
+      navigate('/');
+      // navigate(`/home/${res.data.user._id}`);
      
     },(err) =>{
       //console.log("Err =>", err);
