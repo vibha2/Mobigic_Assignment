@@ -1,0 +1,6 @@
+.body{
+  /* background-color: rgb(69, 68, 68); */
+  background-color: rgba(60, 59, 59, 0.879);
+  min-height: 100vh;
+  padding-bottom: 1em;
+}
