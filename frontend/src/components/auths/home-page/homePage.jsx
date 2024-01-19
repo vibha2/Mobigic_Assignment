@@ -12,11 +12,11 @@ const HomePage = () => {
    useEffect(() => {
     AuthService.getUserById(userId).then(
       (res) => {
-        console.log("user =>", res.data.user);
+        //console.log("user =>", res.data.user);
         setUser(res.data.user);
       },
       (err) => {
-        console.log("err =>", err);
+        //console.log("err =>", err);
       }
     );
   }, [userId]);
@@ -35,8 +35,10 @@ const HomePage = () => {
       toast.error("Please Upload the file");
     }
     // Make an API request to your Node.js server to handle file upload
-    FileService.fileUpload(formData)
-      .then(data => console.log("file uploaded =>",data)
+    FileService.fileUpload(formData, userId)
+      .then(data =>{ 
+        //console.log("file uploaded =>",data)
+      }
       )
       .catch(error => console.error(error));
   };
@@ -44,7 +46,7 @@ const HomePage = () => {
   
   return (
     <div className="homepage-container">
-      <div class="image-container fade-image">
+      <div class="image-container">
         <p className="greet-text">
           <span className="greet-welcome">Hey</span> {user?.firstName},<span className="greet-welcome">{"    "}welcome to File Uploader</span> 
         </p>

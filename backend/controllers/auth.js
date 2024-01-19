@@ -17,8 +17,8 @@ exports.sendOTP = async (req, res) => {
     //check if user already exist
     const user = await User.findOne({ email });
 
-    console.log("email =>", req.body);
-    console.log("user =>", user);
+    //console.log("email =>", req.body);
+    //console.log("user =>", user);
 
     //if user already exit, then return a response
     if (user.isVerified) {
@@ -35,7 +35,7 @@ exports.sendOTP = async (req, res) => {
       specialChars: false,
     });
     //it includes only number
-    console.log("OTP generated: ", otp);
+    //console.log("OTP generated: ", otp);
 
     //check if unique otp or not
     let result = await OTP.findOne({ otp: otp });
@@ -56,7 +56,7 @@ exports.sendOTP = async (req, res) => {
 
     //create an entry for DB
     const otpBody = await OTP.create(otpPayload);
-    console.log("otpBody=> ", otpBody);
+    //console.log("otpBody=> ", otpBody);
 
     //return response successful
     res.status(200).json({
@@ -65,7 +65,7 @@ exports.sendOTP = async (req, res) => {
       otp,
     });
   } catch (error) {
-    console.log("error: ", error);
+    //console.log("error: ", error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -77,7 +77,7 @@ exports.sendOTP = async (req, res) => {
 exports.signUp = async (req, res) => {
   try {
     //de-struct data from request body
-    console.log("signup user =>", req.body);
+    //console.log("signup user =>", req.body);
     const { firstName, lastName, email, password, confirmPassword } = req.body;
 
     //validate the data
@@ -111,7 +111,7 @@ exports.signUp = async (req, res) => {
     // const recentOtp = await OTP.find({ email })
     //   .sort({ createdAt: -1 })
     //   .limit(1);
-    // console.log("recentOtp=> ", recentOtp);
+    // //console.log("recentOtp=> ", recentOtp);
 
     // if (recentOtp.length === 0) {
     //   //OTP not found
@@ -159,7 +159,7 @@ exports.signUp = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.log("error=> ", error);
+    //console.log("error=> ", error);
     return res.status(500).json({
       success: false,
       message: "User cannot be registered. Please try again",
@@ -171,7 +171,7 @@ exports.verifyEmailOTP = async (req, res) => {
   try {
     //de-struct data from request body
     const { email, otp } = req.body;
-    console.log("req.body =>", req.body);
+    //console.log("req.body =>", req.body);
     //validate the data
     if (!email || !otp) {
       return res.status(403).json({
@@ -185,7 +185,7 @@ exports.verifyEmailOTP = async (req, res) => {
     const recentOtp = await OTP.find({ email })
       .sort({ createdAt: -1 })
       .limit(1);
-    console.log("recentOtp=> ", recentOtp);
+    //console.log("recentOtp=> ", recentOtp);
 
     if (recentOtp.length === 0) {
       //OTP not found
@@ -214,7 +214,7 @@ exports.verifyEmailOTP = async (req, res) => {
     // });
 
     //update User with isEmailVerified
-    console.log("OTP verified");
+    //console.log("OTP verified");
     // const user = await User.findByIdAndUpdate({email}, {
 
     // //entry create in DB
@@ -236,7 +236,7 @@ exports.verifyEmailOTP = async (req, res) => {
       message: "OTP verified successfully",
     });
   } catch (error) {
-    console.log("error=> ", error);
+    //console.log("error=> ", error);
     return res.status(500).json({
       success: false,
       message: "Email can't be verified. Please try again",
@@ -300,7 +300,7 @@ exports.login = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return res.status(500).json({
       success: false,
       message: "Login Failure, please try again",
@@ -337,7 +337,7 @@ exports.getUserById = async (req, res) => {
       message: "User details fetched",
     });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return res.status(500).json({
       success: false,
       message: "Fetching user details failed, please try again",
@@ -396,7 +396,7 @@ exports.getUserById = async (req, res) => {
 //           `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
 //         )
 //       );
-//       console.log("Email sent successfully:", emailResponse.response);
+//       //console.log("Email sent successfully:", emailResponse.response);
 //     } catch (error) {
 //       // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
 //       console.error("Error occurred while sending email:", error);

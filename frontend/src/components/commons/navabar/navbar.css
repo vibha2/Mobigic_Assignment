@@ -46,6 +46,12 @@
     box-shadow: 0 0px 8px rgba(119, 117, 117, 0.744);
 }
 .profileLink{
-    color:black;
+    color: white;
     text-decoration: none;
+    font-size: 1.5rem;
+}
+.ProfileDiv
+{
+    display:flex;
+    gap:2rem;
 }

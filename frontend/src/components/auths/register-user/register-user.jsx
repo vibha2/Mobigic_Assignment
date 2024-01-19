@@ -25,14 +25,14 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("User =>", formData);
+    //console.log("User =>", formData);
     AuthService.signUp(formData).then((res) => {
-      console.log("user created =>", res);
+      //console.log("user created =>", res);
       setLoading(false);
       navigate(`/home/${res.data.user._id}`);
      
     },(err) =>{
-      console.log("Err =>", err);
+      //console.log("Err =>", err);
       setError(err.response.data.message);
       setLoading(false);
     })

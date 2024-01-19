@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "./navbar.css";
 import React, { useEffect, useState } from "react";
 import AuthService from "../../../services/authService";
-import { useLocation } from 'react-router-dom'
+
 function NavbarComponent(props) {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState();
@@ -20,27 +20,24 @@ function NavbarComponent(props) {
   };
 
   const [userid, setUserid] = useState('');
-  const location = useLocation();
-
+  
   const handleLogout = () => {
     // Implement your logout logic here
     setMenuOpen(false);
     localStorage.setItem("logged-in-user", null);
-    console.log("Logout clicked");
+    //console.log("Logout clicked");
   };
   useEffect(() => {
-    console.log("props =>", props.props);
-    const token = location.pathname.split('/').at(-1);
-    setUserid(token);
+    //console.log("props =>", props.props);
 
     if (props.props !== "null") {
       AuthService.getUserById(props.props).then(
         (res) => {
-          console.log("user =>", res.data.user);
+          //console.log("user =>", res.data.user);
           setUser(res.data.user);
         },
         (err) => {
-          console.log("err =>", err);
+          //console.log("err =>", err);
         }
       );
       setLoggedIn(true);
@@ -54,7 +51,7 @@ function NavbarComponent(props) {
     <div className="navbar-container">
       <Navbar collapseOnSelect expand="md">
         <Container>
-          <a href={`/home/${userid}`} className="logo-name">
+          <a href={`/home/${user?._id}`} className="logo-name">
             FILEUPLOADER
           </a>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -75,20 +72,23 @@ function NavbarComponent(props) {
             </NavDropdown> */}
             </Nav>
             {isLoggedIn && user ? (
-              <div
-                className="icon-container initials-container"
-                onMouseEnter={handleIconHover}
-                onMouseLeave={handleIconLeave}
-              >
-                {user?.firstName[0] + " " + user?.lastName[0]}
+              <div className="ProfileDiv">
+                  <Link className="profileLink" to={`/profile/${user._id}`}>Profile</Link>
+                <div
+                  className="icon-container initials-container"
+                  onMouseEnter={handleIconHover}
+                  onMouseLeave={handleIconLeave}
+                >
+                
+                  {user?.firstName[0] + " " + user?.lastName[0]}
 
-                {/* Conditional rendering for the menu */}
-                {isMenuOpen && (
-                  <div className="logout-menu">
-                     <Link className="profileLink" to={`/profile/${userid}`}>Profile</Link>
-                    <button onClick={handleLogout}>Logout</button>
-                  </div>
-                )}
+                  {/* Conditional rendering for the menu */}
+                  {isMenuOpen && (
+                    <div className="logout-menu">
+                      <button onClick={handleLogout}>Logout</button>
+                    </div>
+                  )}
+                </div>
               </div>
             ) : (
               <Nav>

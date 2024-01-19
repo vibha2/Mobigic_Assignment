@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     const checkUser = () => {
       const storedUser = localStorage.getItem("logged-in-user");
-      console.log("check user -> stored user =>", storedUser);
+      //console.log("check user -> stored user =>", storedUser);
       if (storedUser !== user) {
         setUser(storedUser);
         if (storedUser === "null") {
@@ -34,6 +34,7 @@ function App() {
     <div className="body">
       <NavbarComponent props={user} />
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/home/:userId" element={<HomePage />} />
         <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/sign-up" element={<Register />} />

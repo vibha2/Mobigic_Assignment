@@ -22,14 +22,14 @@ const Login = () => {
     setLoading(true);
     AuthService.login(formData.email, formData.password).then(
       (res) => {
-        console.log("login res =>", res);
+        //console.log("login res =>", res);
         toastService.success("Operation successful!");
         localStorage.setItem("logged-in-user", res.data.user._id);
         setLoading(false);
         navigate(`/home/${res.data.user._id}`);
       },
       (err) => {
-        console.log("err =>", err);
+        //console.log("err =>", err);
         setError(true);
         setLoading(false);
       }

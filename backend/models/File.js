@@ -10,7 +10,11 @@ const fileSchema = new mongoose.Schema({
     },
     passcode: {
         type: String,
-    } 
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user"
+    }
     
     
 });

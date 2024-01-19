@@ -22,24 +22,9 @@ database.connect();
 app.use(fileUpload());
 //middlewares
 app.use(express.json());
-// app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin: `http://192.168.29.240:${process.env.CLIENT_PORT}`,
-//     credentials: true,
-//   })
-// );
+
 app.use(Cors());
 
-// app.use(
-//   fileUpload({
-//     useTempFiles: true,
-//     tempFileDir: "/tmp",
-//   })
-// );
-
-//cloudinary connection
-// cloudinaryConnect();
 
 app.use('/api/v1/file', fileRoutes);
 //routes
