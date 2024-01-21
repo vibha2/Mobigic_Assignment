@@ -12,7 +12,7 @@
     "AUTH",
     "TOKEN"
   ],
-  "author": "Aakash Tandew",
+  "author": "Vibha Sahu",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
